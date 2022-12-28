@@ -60,19 +60,19 @@
     >
       <div class="container-form my-5" >
         <h1 class="mb-5" style="text-align: center">Add Your Project</h1>
-        <form class="fs-3" action="">
+        <form class="fs-3" action="/home" method="POST">
           <div class="mb-3">
             <label for="projectName" class="form-label">Project Name</label>
-            <input type="text" class="form-control form-control-lg" id="projectName" />
+            <input type="text" name="name" class="form-control form-control-lg" id="projectName" />
           </div>
           <div class="d-flex gap-2 mb-3 justify-content-between">
             <div style="flex: 50%">
               <label for="startDate" class="form-label">Start Date</label>
-              <input type="date" class="form-control form-control-lg" id="startDate" />
+              <input type="date" name="start-date" class="form-control form-control-lg" id="startDate" />
             </div>
             <div style="flex: 50%">
               <label for="endDate" class="form-label">End date</label>
-              <input type="date" class="form-control form-control-lg" id="endDate" />
+              <input type="date" name="end-date" class="form-control form-control-lg" id="endDate" />
             </div>
           </div>
           <div class="mb-3">
@@ -82,17 +82,18 @@
               class="form-control"
               id="desc"
               rows="7"
+              name="description"
             ></textarea>
           </div>
           <h2>Technologies</h2>
           <div class="d-flex fs-5 gap-5" style="align-items: center">
           <div>
             <div class="checkBox">
-              <input class="checked" id="nodeJs" type="checkbox" value="nodejs" />
+              <input name="checkbox" class="checked" id="nodeJs" type="checkbox" value="nodejs" />
               <label for="nodeJs">NodeJs</label>
             </div>
             <div class="checkBox">
-              <input class="checked" id="golang" type="checkbox" value="golang" />
+              <input name="checkbox" class="checked" id="golang" type="checkbox" value="golang" />
               <label for="golang" for="">Golang</label>
             </div>
           </div>       
@@ -100,11 +101,11 @@
         
           <div>
             <div class="checkBox">
-              <input class="checked" id="reactJs" type="checkbox" value="reactjs" />
+              <input name="checkbox" class="checked" id="reactJs" type="checkbox" value="reactjs" />
               <label for="reactJs">ReactJs</label>
             </div>
             <div class="checkBox">
-              <input class="checked" id="python" type="checkbox" value="python" />
+              <input name="checkbox" class="checked" id="python" type="checkbox" value="python" />
               <label for="python">Python</label>
             </div>
           </div>          
@@ -114,7 +115,7 @@
           <input type="file" id="inputImage" class="form-control form-control-lg" />
       </div>
          <div class="d-flex justify-content-end btnSub">
-      <button type="button" class="btn bg-dark text-white  py-1 px-4">Submit</button>
+      <button type="submit" class="btn bg-dark text-white  py-1 px-4">Submit</button>
       </div>
           </div>
         </form>
