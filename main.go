@@ -52,7 +52,7 @@ func addMyProject(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("Start Date : " + r.PostForm.Get("start-date"))
 	fmt.Println("End Date : " + r.PostForm.Get("end-date"))
 	fmt.Println("Description : " + r.PostForm.Get("description"))
-	// fmt.Println("Technologies : " + r.PostForm.Get("checkbox"))
+	fmt.Println("Technologies : " + r.PostForm.Get("checkbox"))
 	http.Redirect(w,r,"/home",http.StatusMovedPermanently)
 }
 
