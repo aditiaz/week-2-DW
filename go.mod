@@ -1,4 +1,4 @@
-module personal-web
+module my-web
 
 go 1.18
 
