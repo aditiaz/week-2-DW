@@ -6,6 +6,7 @@ import (
 	"log"
 	"net/http"
 	"strconv"
+	"time"
 
 	"github.com/gorilla/mux"
 )
@@ -20,8 +21,8 @@ type dataInput struct{
 	ProjectName string
 	Description string
 	Technologies []string
-	// StartDate string
-	// EndDate string
+	StartDate string
+	EndDate string
 	Duration string
 	Image string
 	
@@ -35,9 +36,9 @@ var dataInputs = []dataInput{
 		ProjectName:"Pasar Coding di Indonesia Dinilai Masih Menjanjikan",
 		Description: "Deskripsi",
 		Technologies:[]string {"nodejs","golang","reactjs","python"},
-		// StartDate: "2022-12-11",
-		// EndDate: "2022-12-31",
-		Duration: "3 Months",
+		StartDate: "2022-12-11",
+		EndDate: "2022-12-31",
+		Duration: "3 Bulan",
 		Image:   "/public/assets/female-portrait.jpg",
 		
 	},
@@ -86,17 +87,57 @@ func addMyProject(w http.ResponseWriter, r *http.Request) {
 
 
     projectName :=  r.PostForm.Get("name")
-	// startDate := r.PostForm.Get("start-date")
-	// endDate := r.PostForm.Get("end-date")
-	// duration := endDate - startDate
+	startDate := r.PostForm.Get("start-date")
+	endDate := r.PostForm.Get("end-date")
 	descrition := r.PostForm.Get("description")
 	checkbox := r.Form["checkbox"]
 	image := r.PostForm.Get("image")
+	// duration := endDate - startDate
+
+	startDateTime,err := time.Parse("2006-01-02",startDate)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		w.Write([]byte("message : " + err.Error()))
+		return
+	}
+
+	endDateTime,err := time.Parse("2006-01-02",endDate)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		w.Write([]byte("message : " + err.Error()))
+		return
+	}
+
+	distance := endDateTime.Sub(startDateTime)
+
+	var duration string
+	year := int(distance.Hours()/(12 * 30 * 24))
+	 if year != 0 {
+		duration = strconv.Itoa(year) + " tahun"
+	}else{
+		month := int(distance.Hours()/(30 * 24))
+		if month != 0 {
+			duration = strconv.Itoa(month) + " bulan"
+		}else{
+			week := int(distance.Hours()/(7 *24))
+			if week != 0 {
+				duration = strconv.Itoa(week) +  " minggu"
+			} else {
+				day := int(distance.Hours()/(24))
+				if day != 0 {
+					duration = strconv.Itoa(day) + " hari"
+				}
+			}
+		}
+	}
+
 	var newProject = dataInput {
 		ProjectName: projectName,
 	    Description: descrition,
 	    Technologies: checkbox,
-        Duration: "3 Months",
+		StartDate:startDate,
+        EndDate:endDate,
+        Duration: duration,
 	    Image: image,
 	
 	}
