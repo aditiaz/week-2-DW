@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="/public/style.css" />
   </head>
   <body>
-    <nav class="navbar navbar-light navbar-expand-lg bg-light">
+    <nav class="navbar sticky-top navbar-light navbar-expand-lg bg-light">
       <div class="container-fluid mx-5 my-2.4">
         <img
           style="width: 3.5vw"
@@ -155,22 +155,25 @@
       </div>
       <!-- headerCard end -->
     </div>
-    <h1 class="mt-5 fw-bold" style="text-align: center">My Project</h1>
-    <div class="mx-5 d-flex gap-2" style="background-color: azure; ">
+    <div class="mx-5  gap-2 " style="height: 970px " >
+      <h1 class="mt-5 fw-bold" style="text-align: center">My Project</h1>
+      <div class="d-flex justify-content-center gap-2">
 
       {{range $indexx, $data := .dataInputs }}      
         <div class="card my-5 " style="width: 25rem;">
-          <a class="nav-link " href="/detailProject">
+          <a class="nav-link " href="/projectDetail/{{$indexx}}" target="_blank">
             <img  src="/public/assets/female-portrait.jpg" class="card-img-top img-fluid" alt="project-pic">
             <a class="nav-link" href="/projectDetail/{{$indexx}}" target="_blank">
-               <h4 class=" mx-3 mt-4 fs-4">{{$data.ProjectName}}</h4>
+               <h4 class=" mx-3 mt-4 fs-4" style="height: 23px;">{{$data.ProjectName}}</h4>
             </a>
           </a>
             <div class="card-body">
+               <div style="height: 60px;">
                 <p class="text-secondary">Durasi : {{$data.Duration}}</p>
-               <p class="card-text">{{$data.Description}}</p>
+                <p class="card-text">{{$data.Description}}</p>
+               </div>
                
-            <div class="techIcon">      
+            <div class="techIcon" style="height: 75px;">      
               {{range $index,$dataa := $data.Technologies}}      
               <img src="/public/assets/{{$dataa}}.svg" alt="icons">
               {{end}}
@@ -184,6 +187,7 @@
           </div>
         </div>
         {{end}}
+      </div>
         
       </div>
 

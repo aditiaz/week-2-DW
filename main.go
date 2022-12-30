@@ -55,7 +55,7 @@ func main() {
 	route.HandleFunc("/projectDetail/{id}",projectDetail).Methods("GET")
 	route.HandleFunc("/contactMe",contactMe).Methods("GET")
 	route.HandleFunc("/addProject",addProject).Methods("GET")
-	route.HandleFunc("/detailProject",detailProject).Methods("GET")
+	// route.HandleFunc("/detailProject",detailProject).Methods("GET")
 	route.HandleFunc("/delete-Project/{id}", deleteProject).Methods("GET")
 
 	fmt.Println("Server is running on port 5000")
@@ -95,18 +95,18 @@ func addMyProject(w http.ResponseWriter, r *http.Request) {
 	// duration := endDate - startDate
 
 	startDateTime,err := time.Parse("2006-01-02",startDate)
-	if err != nil {
-		w.WriteHeader(http.StatusInternalServerError)
-		w.Write([]byte("message : " + err.Error()))
-		return
-	}
+	// if err != nil {
+	// 	w.WriteHeader(http.StatusInternalServerError)
+	// 	w.Write([]byte("message : " + err.Error()))
+	// 	return
+	// }
 
 	endDateTime,err := time.Parse("2006-01-02",endDate)
-	if err != nil {
-		w.WriteHeader(http.StatusInternalServerError)
-		w.Write([]byte("message : " + err.Error()))
-		return
-	}
+	// if err != nil {
+	// 	w.WriteHeader(http.StatusInternalServerError)
+	// 	w.Write([]byte("message : " + err.Error()))
+	// 	return
+	// }
 
 	distance := endDateTime.Sub(startDateTime)
 
@@ -171,7 +171,7 @@ func deleteProject(w http.ResponseWriter, r *http.Request) {
 
 	id, _ := strconv.Atoi(mux.Vars(r)["id"])
 
-	fmt.Println(id)
+	// fmt.Println(id)
 
 	dataInputs = append(dataInputs[:id], dataInputs[id+1:]...)
 
@@ -204,16 +204,16 @@ func addProject(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 	tmpl.Execute(w,Data)
 }
-func detailProject(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "text/html; charset=utf-8")
+// func detailProject(w http.ResponseWriter, r *http.Request) {
+// 	w.Header().Set("Content-Type", "text/html; charset=utf-8")
 
-	var tmpl, err = template.ParseFiles("views/detail-page.html")
-	if err != nil {
-		w.WriteHeader(http.StatusInternalServerError)
-		w.Write([]byte("message :" + err.Error()))
-		return
-	}
+// 	var tmpl, err = template.ParseFiles("views/detail-page.html")
+// 	if err != nil {
+// 		w.WriteHeader(http.StatusInternalServerError)
+// 		w.Write([]byte("message :" + err.Error()))
+// 		return
+// 	}
 
-	w.WriteHeader(http.StatusOK)
-	tmpl.Execute(w,Data)
-}
+// 	w.WriteHeader(http.StatusOK)
+// 	tmpl.Execute(w,Data)
+// }
