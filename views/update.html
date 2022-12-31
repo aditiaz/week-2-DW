@@ -60,7 +60,7 @@
     >
       <div class="container-form my-1" >
         <h1 class="mb-2" style="text-align: center">Update Your Project</h1>
-        <form class="fs-3" action="/updateProject/{{.dataInputs.Id}}"  enctype="multipart/form-data"  method="POST">
+        <form class="fs-3" action="/updateProject/{{.ID}}" method="POST">
           <div class="mb-3">
             <label for="projectName" class="form-label">Project Name</label>
             <input value="{{.dataInputs.ProjectName}}" type="text" name="name" class="form-control form-control-lg" id="projectName" />

@@ -53,7 +53,7 @@ func main() {
 	route.HandleFunc("/home",home).Methods("GET")
 	route.HandleFunc("/home",addMyProject).Methods("POST")
 	route.HandleFunc("/editProject/{id}",editProject).Methods("GET")
-	route.HandleFunc("/updateProject/{index}",updateProject).Methods("POST")
+	route.HandleFunc("/updateProject/{id}",updateProject).Methods("POST")
 	route.HandleFunc("/projectDetail/{id}",projectDetail).Methods("GET")
 	route.HandleFunc("/contactMe",contactMe).Methods("GET")
 	route.HandleFunc("/addProject",addProject).Methods("GET")
@@ -146,7 +146,7 @@ func updateProject(w http.ResponseWriter, r *http.Request) {
     projectName :=  r.PostForm.Get("name")
 	startDate := r.PostForm.Get("start-date")
 	endDate := r.PostForm.Get("end-date")
-	descrition := r.PostForm.Get("description")
+	description := r.PostForm.Get("description")
 	checkbox := r.Form["checkbox"]
 	image := r.PostForm.Get("image")
 	startDateTime,_ := time.Parse("2006-01-02",startDate)
@@ -175,7 +175,7 @@ func updateProject(w http.ResponseWriter, r *http.Request) {
 
 	var newProject = dataInput {		
 		ProjectName: projectName,
-	    Description: descrition,
+	    Description: description,
 	    Technologies: checkbox,
 		StartDate:startDate,
         EndDate:endDate,
@@ -184,102 +184,29 @@ func updateProject(w http.ResponseWriter, r *http.Request) {
 	
 	}
 
-	
-	fmt.Println(dataInputs)
-     id,_ := strconv.Atoi(mux.Vars(r)["id"])
+
+	id, _ := strconv.Atoi(mux.Vars(r)["id"])
 	 dataInputs[id] = newProject
-	// dataInputs = append(dataInputs, newProject)
-	fmt.Println(dataInputs)
+	
 	http.Redirect(w,r,"/home",http.StatusMovedPermanently)
 }
 
-// func updateProject(w http.ResponseWriter, r *http.Request) {
-// 	err := r.ParseForm()
-// 	if err != nil {
-// 		log.Fatal(err)
-// 	}
-
-
-//     projectName :=  r.PostForm.Get("name")
-// 	startDate := r.PostForm.Get("start-date")
-// 	endDate := r.PostForm.Get("end-date")
-// 	description := r.PostForm.Get("description")
-// 	checkbox := r.Form["checkbox"]
-// 	image := r.PostForm.Get("image")
-// 	startDateTime,_ := time.Parse("2006-01-02",startDate)	
-// 	endDateTime,_ := time.Parse("2006-01-02",endDate)
-// 	distance := endDateTime.Sub(startDateTime)
-
-// 	var duration string
-// 	year := int(distance.Hours()/(12 * 30 * 24))
-// 	 if year != 0 {
-// 		duration = strconv.Itoa(year) + " tahun"
-// 	}else{
-// 		month := int(distance.Hours()/(30 * 24))
-// 		if month != 0 {
-// 			duration = strconv.Itoa(month) + " bulan"
-// 		}else{
-// 			week := int(distance.Hours()/(7 *24))
-// 			if week != 0 {
-// 				duration = strconv.Itoa(week) +  " minggu"
-// 			} else {
-// 				day := int(distance.Hours()/(24))
-// 				if day != 0 {
-// 					duration = strconv.Itoa(day) + " hari"
-// 				}
-// 			}
-// 		}
-// 	}
-	
-
-// 	var newProject = dataInput {	
-// 		ProjectName: projectName,
-// 	    Description: description,
-// 	    Technologies: checkbox,
-// 		StartDate:startDate,
-//         EndDate:endDate,
-//         Duration: duration,
-// 	    Image: image,
-	
-// 	}
-// 	id, _ := strconv.Atoi(mux.Vars(r)["id"])
-// 	dataInputs[id] = newProject
-// 	fmt.Println(dataInputs[id])
-// 	http.Redirect(w,r,"/home",http.StatusMovedPermanently)	
-// }
 
 func editProject( w http.ResponseWriter, r *http.Request){
 	w.Header().Set("Content-Type", "text/html;charset=utf-8")
 	
 	var tmpl,err = template.ParseFiles("views/update.html")
-	
+	id,_ := strconv.Atoi(mux.Vars(r)["id"])
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		w.Write([]byte("message :" + err.Error()))
 		return
 	}
 	
-	id,_ := strconv.Atoi(mux.Vars(r)["id"])
-
-	dataInputDetail := dataInput{}
-
-	for index, data := range dataInputs {
-		if index == id {
-			dataInputDetail = dataInput{
-				Id: id,
-				ProjectName: data.ProjectName,
-				Description: data.Description,
-				Technologies: data.Technologies,
-				StartDate: data.StartDate,
-				EndDate: data.EndDate,
-				Duration: data.Duration,
-				Image: data.Image,
-		    }
-		}
-	}
 	resp := map[string]interface{}{
-		// "ID"       : id,
-		"dataInputs" : dataInputDetail,
+		"ID" : id,
+		"Data":  Data,
+		"dataInputs" : dataInputs[id],
 	}
 	w.WriteHeader(http.StatusOK)
 	tmpl.Execute(w,resp)
