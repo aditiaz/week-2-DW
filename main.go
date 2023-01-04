@@ -59,8 +59,8 @@ func main() {
 	route.HandleFunc("/addProject",addProject).Methods("GET")
 	route.HandleFunc("/delete-Project/{id}", deleteProject).Methods("GET")
 
-	fmt.Println("Server is running on port 5000")
-	http.ListenAndServe("localhost:5000", route)
+	fmt.Println("Server is running on port 5002")
+	http.ListenAndServe("localhost:5002", route)
 }
 
 func home(w http.ResponseWriter, r *http.Request) {
